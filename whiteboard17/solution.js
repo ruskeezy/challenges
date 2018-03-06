@@ -24,4 +24,4 @@ class Queue {
   }
 }
 
-module.exports = solution;
+module.exports = new Queue;
