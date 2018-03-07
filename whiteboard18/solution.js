@@ -6,15 +6,16 @@ module.exports = function(arr) {
 
   for(var i = 0; i < arr.length; i++) {
     if (arr[i] === 1) {
-      counter++
+      counter++;
+      if (counter > highest) {
+        highest = counter;
+      }
     }
+
     if (arr[i] === 0) {
       counter = 0;
     }
 
-    if (counter > highest) {
-      highest = counter;
-    }
-    return highest;
   }
+  return highest;
 }
