@@ -1,7 +1,6 @@
 'use strict';
 
 const Stack = require('../stack.js');
-const Node = require('../node.js');
 require('jest');
 
 
