@@ -1,9 +1,9 @@
-function preOrderFind(bst, find) {
+'use strict';
+
+module.exports = function preOrderFind(bst, find) {
   var result
   _traverse(bst.root);
   function _traverse(node) {
-    console.log(node.value)
-    console.log(find)
     if( node.value === find) result=true;
     if (node.left) _traverse(node.left);
     if (node.right) _traverse(node.right); 
@@ -35,5 +35,3 @@ const testBst = {
     }
   }
 }
-
-console.log(preOrderFind(testBst, 6))
