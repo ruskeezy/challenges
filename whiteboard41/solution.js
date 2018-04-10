@@ -1,40 +1,110 @@
 'use strict';
 
-const bst = {
-  root: {
-    value: 15, 
+module.exports = exports = {};
+
+exports.tree = {
+  val: 10, 
+  left: {
+    val: 7,
     left: {
-      value: 8, 
+      val: 4,
       left: {
-        value: 4, 
+        val: 2,
         left: null,
         right: null,
       },
-      right: {
-        value: 10, 
-        left: null,
-        right: null,
-      },
+      right: null,
     },
     right: {
-      value: 20, 
+      val: 9,
       left: null,
-      right: {
-        value: 30, 
+      right: null,
+    }
+  },
+  right: {
+    val: 14,
+    left: {
+      val: 12,
+      left: {
+        val: 11,
         left: null,
         right: null,
       },
+      right: { 
+        val: 13, 
+        left: null, 
+        right: null },
     },
-  },
-};
-
-const removeNode = function(tree, removeValue) {
-  const _traverse = (node) => {
-    if (!node) return;
-
-    _traverse(node.left);
-    _traverse(node.right);
-  };
-
-  _traverse(tree.root);
+    right: {
+      val: 23,
+      left: null,
+      right: null,
+    }
+  }
 }
+
+// Breadth First Traversal
+exports.printTree = (tree, callback) => {
+  let q = [tree];
+  let current;
+
+  while (q.length > 0) {
+    current = q.pop();
+    callback(current)
+    if (current.left) q.unshift(current.left)
+    if (current.right) q.unshift(current.right);
+  }
+}
+
+// Helper Function
+const countChildren = tree => {
+  return tree.left && tree.right
+    ? 2
+    : tree.left || tree.right
+      ? 1
+      : 0
+}
+
+// Remove Node Function
+exports.removeNode = (tree, removeVal) => {
+  let found = false;
+  if (tree.val === removeVal) console.log('Nope');
+
+  _traverse(tree);
+  function _traverse(tree) {
+    if (!tree || found ) return;
+
+    const child = tree.left && tree.left.val === removeVal
+      ? 'left'
+      : tree.right && tree.right.val === removeVal
+        ? 'right'
+        : null;
+
+    if (child) {
+      const numChildren = countChildren(tree[child]);
+
+      if (numChildren === 0) {
+        return tree[child] = null;        
+        } else if (numChildren === 1) {
+          return tree[child] = tree[child].left || tree[child].right;
+        } else if (numChildren === 2) {
+          return;
+          // let minimumNode = tree[child].right;
+
+          // while (minimumNode) {
+          //   if (minimumNode.left) {
+          //     minimumNode = minimumNode.left;
+          //   } else {
+          //     break;
+          //   }
+          // }
+          // tree[child].val = minimumNode.val;
+          // minimumNode.val = null;
+        }
+      } else {
+        _traverse(tree.left);
+        _traverse(tree.right);
+      }
+  }
+  return tree;
+};
